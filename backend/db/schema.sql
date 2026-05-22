@@ -1,0 +1,49 @@
+DROP TABLE IF EXISTS users CASCADE; 
+DROP TABLE IF EXISTS cars CASCADE;
+DROP TABLE IF EXISTS states CASCADE;
+DROP TABLE IF EXISTS dealer_markups CASCADE;
+DROP TABLE IF EXISTS favorites CASCADE;
+
+CREATE TABLE users (
+  id serial PRIMARY KEY,
+  username TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL
+);
+
+CREATE TABLE cars(
+  id SERIAL PRIMARY KEY,
+  make TEXT NOT NULL,
+  model TEXT NOT NULL,
+  trim TEXT NOT NULL,
+  year INTEGER NOT NULL,
+  hp INTEGER NOT NULL,
+  torque INTEGER NOT NULL,
+  engine_spec VARCHAR(100) NOT NULL,
+  msrp INTEGER NOT NULL,
+  image_slug TEXT
+);
+
+
+
+CREATE TABLE states(
+  id SERIAL PRIMARY KEY,
+  state_name TEXT NOT NULL,
+  state_code VARCHAR(2) NOT NULL
+  -- state_id INTEGER NOT NULL REFERENCES dealer_markup(id) ON DELETE CASCADE
+);
+
+CREATE TABLE dealer_markups(
+id SERIAL PRIMARY KEY,
+year INTEGER NOT NULL,
+average_markup_percent NUMERIC(5,2) NOT NULL,
+average_markup_dollar NUMERIC(10,2) NOT NULL,
+car_id INTEGER NOT NULL REFERENCES cars(id) ON DELETE CASCADE,
+state_id INTEGER NOT NULL REFERENCES states(id) ON DELETE CASCADE
+);
+
+CREATE TABLE  favorites(
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id)ON DELETE CASCADE,
+  car_id INTEGER NOT NULL REFERENCES cars(id) ON DELETE CASCADE,
+  UNIQUE(user_id, car_id)
+);
