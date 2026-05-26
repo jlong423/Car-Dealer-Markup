@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { addFavorite, removeFavorite } from "../api/favorites";
 
 export default function FavoriteToggle({ carId, initialFavorite }) {
   console.log(carId);
   const [isFavorite, setIsFavorite] = useState(initialFavorite);
+
+  useEffect(() => {
+    setIsFavorite(initialFavorite);
+  }, [initialFavorite]);
 
   async function toggle(carId) {
     try {

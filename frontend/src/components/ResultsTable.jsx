@@ -130,7 +130,7 @@
 
 // ADDING DETAIL PAGE
 import { Link } from "react-router";
-import DealIndicator from "./DealIndicator";
+import DealIndicator from "./Dealindicator";
 import FavoriteToggle from "./FavoriteToggle";
 
 export default function ResultsTable({ results = [], token }) {
